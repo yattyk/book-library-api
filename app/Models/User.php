@@ -20,4 +20,11 @@ final class User
         $u = $stmt->fetch();
         return $u ?: null;
     }
+    
+    public static function all(): array
+    {
+        return Database::pdo()
+            ->query('SELECT id, login FROM users ORDER BY id')
+            ->fetchAll();
+    }
 }
