@@ -26,4 +26,16 @@ final class BooksController
             'url'   => $book['source_url']
         ]);
     }
+
+    public function create(): string
+    {
+        $uid = (int) $GLOBALS['auth_user_id'];
+        try {
+            $id = \App\Services\BookService::createFromInput($uid);
+            return Response::json(['id' => $id], 201);
+        } catch (\Throwable $e) {
+            return Response::json(['error' => $e->getMessage()], 422);
+        }
+    }
+
 }
