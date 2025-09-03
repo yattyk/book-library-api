@@ -55,4 +55,24 @@ final class BooksController
             $ok ? 200 : 404
         );
     }
+
+    public function delete(array $p): string
+    {
+        $uid = (int) $GLOBALS['auth_user_id'];
+        $ok = \App\Models\Book::softDelete((int) $p['id'], $uid);
+        return Response::json(
+            $ok ? ['status' => 'deleted'] : ['error' => 'Not found'],
+            $ok ? 200 : 404
+        );
+    }
+
+    public function restore(array $p): string
+    {
+        $uid = (int) $GLOBALS['auth_user_id'];
+        $ok = \App\Models\Book::restore((int) $p['id'], $uid);
+        return Response::json(
+            $ok ? ['status' => 'restored'] : ['error' => 'Not found'],
+            $ok ? 200 : 404
+        );
+    }
 }

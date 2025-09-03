@@ -50,4 +50,22 @@ final class Book
             ':u' => $ownerId
         ]);
     }
+
+    public static function softDelete(int $id, int $ownerId): bool
+    {
+        $st = Database::pdo()->prepare(
+            'UPDATE books SET deleted_at = NOW()
+             WHERE id = :id AND user_id = :u AND deleted_at IS NULL'
+        );
+        return $st->execute([':id' => $id, ':u' => $ownerId]);
+    }
+
+    public static function restore(int $id, int $ownerId): bool
+    {
+        $st = Database::pdo()->prepare(
+            'UPDATE books SET deleted_at = NULL
+             WHERE id = :id AND user_id = :u AND deleted_at IS NOT NULL'
+        );
+        return $st->execute([':id' => $id, ':u' => $ownerId]);
+    }
 }
