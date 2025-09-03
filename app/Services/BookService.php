@@ -24,4 +24,17 @@ final class BookService
 
         return Book::create($userId, $title, $text, $url);
     }
+
+    public static function saveExternal(int $userId, array $data): int
+    {
+        $title = trim($data['title'] ?? '');
+        $url   = $data['url'] ?? null;
+        $desc  = $data['description'] ?? null;
+
+        if ($title === '') {
+            throw new \RuntimeException('Title is required');
+        }
+
+        return \App\Models\Book::create($userId, $title, $desc, $url);
+    }
 }

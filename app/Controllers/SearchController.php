@@ -49,4 +49,17 @@ final class SearchController
 
         return Response::json(['items' => $results]);
     }
+
+    public function save(): string
+    {
+        $uid = (int) $GLOBALS['auth_user_id'];
+        $d = json_decode(file_get_contents('php://input'), true) ?? [];
+
+        try {
+            $id = \App\Services\BookService::saveExternal($uid, $d);
+            return Response::json(['id' => $id], 201);
+        } catch (\Throwable $e) {
+            return Response::json(['error' => $e->getMessage()], 422);
+        }
+    }
 }

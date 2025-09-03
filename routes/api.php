@@ -12,6 +12,7 @@ $router->add('POST', '/api/login', [AuthController::class, 'login']);
 $router->add('POST', '/api/permissions/grant', [UsersController::class, 'grantAccess'], $auth);
 $router->add('POST', '/api/books', [BooksController::class, 'create'], $auth);
 $router->add('POST',   '/api/books/{id}/restore',[BooksController::class, 'restore'], $auth);
+$router->add('POST', '/api/search/save', [SearchController::class, 'save'], $auth);
 
 $router->add('GET',  '/api/users', [UsersController::class, 'index'], $auth);
 $router->add('GET', '/api/books', [BooksController::class, 'myBooks'], $auth);
