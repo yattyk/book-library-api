@@ -38,4 +38,21 @@ final class BooksController
         }
     }
 
+    public function update(array $p): string
+    {
+        $uid = (int) $GLOBALS['auth_user_id'];
+        $d = json_decode(file_get_contents('php://input'), true) ?? [];
+
+        $ok = \App\Models\Book::update(
+            (int) $p['id'],
+            $uid,
+            (string) ($d['title'] ?? ''),
+            $d['text'] ?? null
+        );
+
+        return Response::json(
+            $ok ? ['status' => 'ok'] : ['error' => 'Not found'],
+            $ok ? 200 : 404
+        );
+    }
 }

@@ -35,4 +35,19 @@ final class Book
         $r = $st->fetch();
         return $r ?: null;
     }
+
+    public static function update(int $id, int $ownerId, string $title, ?string $text): bool
+    {
+        $st = Database::pdo()->prepare(
+            'UPDATE books
+            SET title = :t, text = :x, updated_at = NOW()
+            WHERE id = :id AND user_id = :u AND deleted_at IS NULL'
+        );
+        return $st->execute([
+            ':t' => $title,
+            ':x' => $text,
+            ':id' => $id,
+            ':u' => $ownerId
+        ]);
+    }
 }
