@@ -75,4 +75,14 @@ final class BooksController
             $ok ? 200 : 404
         );
     }
+
+    public function userBooks(array $p): string
+    {
+        $requester = (int) $GLOBALS['auth_user_id'];
+        $owner     = (int) $p['id'];
+        if ($owner !== $requester && !\App\Models\Permission::canView($owner, $requester)) {
+            return Response::json(['error' => 'Forbidden'], 403);
+        }
+        return Response::json(\App\Models\Book::byOwner($owner));
+    }
 }

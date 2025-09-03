@@ -15,6 +15,7 @@ $router->add('POST',   '/api/books/{id}/restore',[BooksController::class, 'resto
 $router->add('GET',  '/api/users', [UsersController::class, 'index'], $auth);
 $router->add('GET', '/api/books', [BooksController::class, 'myBooks'], $auth);
 $router->add('GET', '/api/books/{id}', [BooksController::class, 'show'], $auth);
+$router->add('GET', '/api/users/{id}/books', [BooksController::class, 'userBooks'], $auth);
 
 $router->add('PUT', '/api/books/{id}', [BooksController::class, 'update'], $auth);
 
