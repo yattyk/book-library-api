@@ -3,6 +3,7 @@ use App\Controllers\AuthController;
 use App\Controllers\UsersController;
 use App\Middleware\AuthMiddleware;
 use App\Controllers\BooksController;
+use App\Controllers\SearchController;
 
 $auth = [AuthMiddleware::class . '::ensure'];
 
@@ -16,6 +17,7 @@ $router->add('GET',  '/api/users', [UsersController::class, 'index'], $auth);
 $router->add('GET', '/api/books', [BooksController::class, 'myBooks'], $auth);
 $router->add('GET', '/api/books/{id}', [BooksController::class, 'show'], $auth);
 $router->add('GET', '/api/users/{id}/books', [BooksController::class, 'userBooks'], $auth);
+$router->add('GET', '/api/search', [SearchController::class, 'search'], $auth);
 
 $router->add('PUT', '/api/books/{id}', [BooksController::class, 'update'], $auth);
 
